@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <title>Join Veristudy</title>
+  <style>
+    body{margin:0;background:#08111f;color:#edf4f7;font:16px system-ui,-apple-system,Segoe UI,sans-serif;display:grid;min-height:100vh;place-items:center}.card{width:min(520px,calc(100% - 40px));box-sizing:border-box;background:#0e1825;border:1px solid #253447;border-radius:18px;padding:34px;box-shadow:0 20px 60px #0008}h1{margin:0 0 12px;font-size:30px}p{color:#aebdca;line-height:1.55}.code{font-size:28px;letter-spacing:5px;color:#2dd4a6;font-weight:750;margin:24px 0}.button{display:block;text-align:center;text-decoration:none;background:#1ec997;color:#04110d;font-weight:750;padding:14px;border-radius:10px;margin-top:14px}.secondary{background:#17283c;color:#e8f0f5}.small{font-size:13px;margin-top:22px}.hidden{display:none}
+  </style>
+  <script src="invite.js" defer></script>
+</head>
+<body>
+  <main class="card">
+    <h1 id="title">Join on Veristudy</h1>
+    <p id="instructions">Open the desktop app, then enter your name and email. After email verification, you will join as a member.</p>
+    <div class="code" id="join-code"></div>
+    <a class="button hidden" id="open-app" href="#">Open Veristudy</a>
+    <a class="button secondary" href="https://github.com/CooperDonnell/Veristudy-Releases/releases/latest">Download Veristudy</a>
+    <p class="small">The organization owner can grant admin access after you join.</p>
+  </main>
+</body>
+</html>
