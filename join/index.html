@@ -6,17 +6,24 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src https://api.github.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
   <title>Join Veristudy</title>
   <style>
-    body{margin:0;background:#08111f;color:#edf4f7;font:16px system-ui,-apple-system,Segoe UI,sans-serif;display:grid;min-height:100vh;place-items:center}.card{width:min(540px,calc(100% - 40px));box-sizing:border-box;background:#0e1825;border:1px solid #253447;border-radius:18px;padding:34px;box-shadow:0 20px 60px #0008}h1{margin:0 0 12px;font-size:30px}p{color:#aebdca;line-height:1.55}.code{font-size:28px;letter-spacing:5px;color:#2dd4a6;font-weight:750;margin:24px 0}.button{display:block;width:100%;box-sizing:border-box;text-align:left;text-decoration:none;background:#1ec997;color:#04110d;font:inherit;font-weight:750;padding:16px;border:0;border-radius:10px;margin-top:12px;cursor:pointer}.button span{display:block;font-size:13px;font-weight:450;margin-top:4px}.button:disabled{opacity:.6;cursor:wait}.button:focus-visible,a:focus-visible{outline:3px solid #edf4f7;outline-offset:4px}.secondary{background:#17283c;color:#e8f0f5}.small{font-size:13px;margin-top:22px}.status{min-height:24px;color:#2dd4a6;font-size:14px;margin-top:16px}a{color:#8fe5ca}ol{padding-left:20px;color:#aebdca;line-height:1.7}.divider{border-top:1px solid #253447;margin-top:24px;padding-top:20px}@media(max-width:480px){.card{padding:24px}.code{font-size:25px;letter-spacing:3px}}
+    body{margin:0;background:#08111f;color:#edf4f7;font:16px system-ui,-apple-system,Segoe UI,sans-serif;display:grid;min-height:100vh;place-items:center}.card{width:min(540px,calc(100% - 40px));box-sizing:border-box;background:#0e1825;border:1px solid #253447;border-radius:18px;padding:34px;box-shadow:0 20px 60px #0008}h1{margin:0 0 12px;font-size:30px}p{color:#aebdca;line-height:1.55}.code{font-size:28px;letter-spacing:5px;color:#2dd4a6;font-weight:750;margin:24px 0}.button{display:block;width:100%;box-sizing:border-box;text-align:left;text-decoration:none;background:#1ec997;color:#04110d;font:inherit;font-weight:750;padding:16px;border:0;border-radius:10px;margin-top:12px;cursor:pointer}.button span{display:block;font-size:13px;font-weight:450;margin-top:4px}.button:disabled{opacity:.6;cursor:wait}.button:focus-visible,a:focus-visible{outline:3px solid #edf4f7;outline-offset:4px}.secondary{background:#17283c;color:#e8f0f5}.small{font-size:13px;margin-top:22px}.join-help{margin-top:20px;padding:20px;border:1px solid #2dd4a6;border-radius:12px;background:#102b29}.join-help[hidden]{display:none}.join-help h2{font-size:20px;margin:0 0 8px}.join-help p{margin:8px 0}.join-help .code{margin:12px 0}.copy-button{background:#17283c;color:#edf4f7;border:1px solid #547365;border-radius:8px;padding:10px 14px;font:inherit;cursor:pointer}.copy-button:focus-visible{outline:3px solid #edf4f7;outline-offset:4px}.status{min-height:24px;color:#2dd4a6;font-size:14px;margin-top:16px}a{color:#8fe5ca}ol{padding-left:20px;color:#aebdca;line-height:1.7}.divider{border-top:1px solid #253447;margin-top:24px;padding-top:20px}@media(max-width:480px){.card{padding:24px}.code{font-size:25px;letter-spacing:3px}}
   </style>
-  <script src="invite.js?v=20261021" defer></script>
+  <script src="invite.js?v=20261021-code" defer></script>
 </head>
 <body>
   <main class="card">
     <h1 id="title">Join on Veristudy</h1>
     <p id="instructions">Choose the download for your computer. Veristudy runs on Windows and Apple silicon Macs, not phones or iPads.</p>
-    <div class="code" id="join-code" aria-label="Organization join code"></div>
+    <div id="initial-code"><strong>Your organization join code</strong><div class="code" id="join-code" aria-label="Organization join code"></div></div>
     <button class="button" id="download-windows" type="button">Download for Windows (.exe)<span>Windows laptop or desktop · 64-bit</span></button>
     <button class="button secondary" id="download-mac" type="button">Download for Mac (.dmg)<span>Apple silicon Mac · M1 or newer</span></button>
+    <section class="join-help" id="download-join-help" aria-labelledby="download-join-title" hidden>
+      <h2 id="download-join-title">Use this code when you open Veristudy</h2>
+      <div class="code" id="download-join-code" aria-label="Join code for setup"></div>
+      <button class="copy-button" id="copy-join-code" type="button">Copy join code</button>
+      <p>After installing, choose <strong>Join Existing</strong> in the app and enter this code. Keep this page open until you finish joining.</p>
+      <p class="small">Already have an account? Sign in with your existing account.</p>
+    </section>
     <div class="status" id="install-status" role="status" aria-live="polite"></div>
     <a class="small" href="https://github.com/CooperDonnell/Veristudy-Releases/releases/latest">All downloads and release notes</a>
     <div class="divider">

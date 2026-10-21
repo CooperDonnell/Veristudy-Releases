@@ -10,14 +10,15 @@ const assets = [
   { name: 'Veristudy-1.0.7-mac-arm64.dmg', browser_download_url: macUrl },
   { name: 'Veristudy-1.0.7-win-x64.exe', browser_download_url: windowsUrl }
 ];
-function page({ releaseAssets = assets, fail = false } = {}) {
-  const elements = new Map(['title', 'instructions', 'join-code', 'download-windows', 'download-mac', 'install-status'].map(id => [id, {
-    textContent: '', disabled: false, handlers: {}, addEventListener(event, handler) { this.handlers[event] = handler; }
+function page({ releaseAssets = assets, fail = false, search = '?code=ABCD1234', clipboardFails = false } = {}) {
+  let copiedCode;
+  const elements = new Map(['title', 'instructions', 'join-code', 'download-windows', 'download-mac', 'install-status', 'initial-code', 'download-join-help', 'download-join-code', 'copy-join-code'].map(id => [id, {
+    textContent: '', disabled: false, hidden: id === 'download-join-help', scrolled: false, scrollIntoView() { this.scrolled = true; }, handlers: {}, addEventListener(event, handler) { this.handlers[event] = handler; }
   }]));
-  const location = { search: '?code=ABCD1234', href: '' };
+  const location = { search, href: '' };
   const context = vm.createContext({
     window: { location }, URL, URLSearchParams,
-    navigator: { userAgentData: { platform: 'macOS' }, platform: 'MacIntel', userAgent: 'Macintosh' },
+    navigator: { clipboard: { writeText: async value => { if (clipboardFails) throw new Error('denied'); copiedCode = value; } }, userAgentData: { platform: 'macOS' }, platform: 'MacIntel', userAgent: 'Macintosh' },
     document: { getElementById: id => elements.get(id) },
     fetch: async () => {
       if (fail) throw new Error('offline');
@@ -25,7 +26,7 @@ function page({ releaseAssets = assets, fail = false } = {}) {
     }
   });
   vm.runInContext(source, context);
-  return { elements, location, context };
+  return { elements, location, context, getCopiedCode: () => copiedCode };
 }
 test('Windows choice downloads EXE even when the browser reports Mac and DMG is listed first', async () => {
   const { elements, location } = page();
@@ -63,6 +64,36 @@ test('manual join code is preserved and the page has explicit download labels', 
   const html = fs.readFileSync(path.join(__dirname, '../join/index.html'), 'utf8');
   assert.match(html, /Download for Windows \(\.exe\)/);
   assert.match(html, /Download for Mac \(\.dmg\)/);
-  assert.match(html, /invite\.js\?v=20261021/);
-  assert.doesNotMatch(source, /navigator\./);
+  assert.match(html, /invite\.js\?v=20261021-code/);
+  assert.doesNotMatch(source, /navigator\.(userAgent|platform)/);
+});
+
+test('both downloads display the setup code and keep it visible after the download starts', async () => {
+  for (const platform of ['windows', 'mac']) {
+    const { elements } = page();
+    await elements.get(`download-${platform}`).handlers.click();
+    assert.equal(elements.get('download-join-help').hidden, false);
+    assert.equal(elements.get('download-join-help').scrolled, true);
+    assert.equal(elements.get('download-join-code').textContent, 'ABCD-1234');
+    assert.equal(elements.get('initial-code').hidden, true);
+  }
+});
+test('copy button copies the displayed join code and handles denied clipboard access', async () => {
+  const normal = page();
+  await normal.elements.get('copy-join-code').handlers.click();
+  assert.equal(normal.getCopiedCode(), 'ABCD-1234');
+  assert.equal(normal.elements.get('copy-join-code').textContent, 'Copied!');
+  const denied = page({ clipboardFails: true });
+  await denied.elements.get('copy-join-code').handlers.click();
+  assert.equal(denied.elements.get('copy-join-code').textContent, 'Select and copy the code above');
+  assert.equal(denied.elements.get('download-join-code').textContent, 'ABCD-1234');
+});
+test('downloads without a valid invite code do not show an empty setup code', async () => {
+  for (const search of ['', '?code=ABC']) {
+    const { elements, location } = page({ search });
+    await elements.get('download-windows').handlers.click();
+    assert.equal(location.href, windowsUrl);
+    assert.equal(elements.get('initial-code').hidden, true);
+    assert.equal(elements.get('download-join-help').hidden, true);
+  }
 });

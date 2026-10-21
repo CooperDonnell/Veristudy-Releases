@@ -5,11 +5,20 @@ const codeElement = document.getElementById('join-code');
 const windowsButton = document.getElementById('download-windows');
 const macButton = document.getElementById('download-mac');
 const installStatus = document.getElementById('install-status');
+const downloadJoinHelp = document.getElementById('download-join-help');
+const downloadJoinCode = document.getElementById('download-join-code');
+const copyCodeButton = document.getElementById('copy-join-code');
+const formattedCode = code.length === 8 ? `${code.slice(0, 4)}-${code.slice(4)}` : '';
 const releaseApi = 'https://api.github.com/repos/CooperDonnell/Veristudy-Releases/releases/latest';
 let downloading = false;
 
 async function downloadInstaller(platform) {
   if (downloading || !['windows', 'mac'].includes(platform)) return;
+  if (formattedCode) {
+    document.getElementById('initial-code').hidden = true;
+    downloadJoinHelp.hidden = false;
+    downloadJoinHelp.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
   downloading = true;
   windowsButton.disabled = true;
   macButton.disabled = true;
@@ -42,12 +51,24 @@ async function downloadInstaller(platform) {
   }
 }
 
+copyCodeButton.addEventListener('click', async () => {
+  if (!formattedCode) return;
+  try {
+    await navigator.clipboard.writeText(formattedCode);
+    copyCodeButton.textContent = 'Copied!';
+  } catch {
+    copyCodeButton.textContent = 'Select and copy the code above';
+  }
+});
+
 windowsButton.addEventListener('click', () => downloadInstaller('windows'));
 macButton.addEventListener('click', () => downloadInstaller('mac'));
 
 if (code.length !== 8) {
+  document.getElementById('initial-code').hidden = true;
   title.textContent = 'Download Veristudy';
   instructions.textContent = 'Choose the download for your computer. Ask your organization owner for the group invite link or join code if you are creating a new account.';
 } else {
-  codeElement.textContent = `${code.slice(0, 4)}-${code.slice(4)}`;
+  codeElement.textContent = formattedCode;
+  downloadJoinCode.textContent = formattedCode;
 }
