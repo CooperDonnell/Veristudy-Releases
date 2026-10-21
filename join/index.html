@@ -6,28 +6,25 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src https://api.github.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
   <title>Join Veristudy</title>
   <style>
-    body{margin:0;background:#08111f;color:#edf4f7;font:16px system-ui,-apple-system,Segoe UI,sans-serif;display:grid;min-height:100vh;place-items:center}.card{width:min(520px,calc(100% - 40px));box-sizing:border-box;background:#0e1825;border:1px solid #253447;border-radius:18px;padding:34px;box-shadow:0 20px 60px #0008}h1{margin:0 0 12px;font-size:30px}p{color:#aebdca;line-height:1.55}.code{font-size:28px;letter-spacing:5px;color:#2dd4a6;font-weight:750;margin:24px 0}.button{display:block;width:100%;box-sizing:border-box;text-align:center;text-decoration:none;background:#1ec997;color:#04110d;font:inherit;font-weight:750;padding:14px;border:0;border-radius:10px;margin-top:14px;cursor:pointer}.secondary{background:#17283c;color:#e8f0f5}.small{font-size:13px;margin-top:22px}.hidden{display:none!important}.modal{position:fixed;inset:0;display:grid;place-items:center;padding:20px;background:#02070dcc}.modal-card{width:min(430px,100%);box-sizing:border-box;background:#0e1825;border:1px solid #31445a;border-radius:16px;padding:26px;box-shadow:0 24px 80px #000}.modal-card h2{margin:0 0 10px}.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modal-actions .button{margin-top:10px}.status{min-height:20px;color:#2dd4a6;font-size:13px}
+    body{margin:0;background:#08111f;color:#edf4f7;font:16px system-ui,-apple-system,Segoe UI,sans-serif;display:grid;min-height:100vh;place-items:center}.card{width:min(540px,calc(100% - 40px));box-sizing:border-box;background:#0e1825;border:1px solid #253447;border-radius:18px;padding:34px;box-shadow:0 20px 60px #0008}h1{margin:0 0 12px;font-size:30px}p{color:#aebdca;line-height:1.55}.code{font-size:28px;letter-spacing:5px;color:#2dd4a6;font-weight:750;margin:24px 0}.button{display:block;width:100%;box-sizing:border-box;text-align:left;text-decoration:none;background:#1ec997;color:#04110d;font:inherit;font-weight:750;padding:16px;border:0;border-radius:10px;margin-top:12px;cursor:pointer}.button span{display:block;font-size:13px;font-weight:450;margin-top:4px}.button:disabled{opacity:.6;cursor:wait}.button:focus-visible,a:focus-visible{outline:3px solid #edf4f7;outline-offset:4px}.secondary{background:#17283c;color:#e8f0f5}.small{font-size:13px;margin-top:22px}.status{min-height:24px;color:#2dd4a6;font-size:14px;margin-top:16px}a{color:#8fe5ca}ol{padding-left:20px;color:#aebdca;line-height:1.7}.divider{border-top:1px solid #253447;margin-top:24px;padding-top:20px}@media(max-width:480px){.card{padding:24px}.code{font-size:25px;letter-spacing:3px}}
   </style>
-  <script src="invite.js" defer></script>
+  <script src="invite.js?v=20261021" defer></script>
 </head>
 <body>
   <main class="card">
     <h1 id="title">Join on Veristudy</h1>
-    <p id="instructions">Download Veristudy, open it, choose <strong>Join Existing</strong>, and enter this code manually with your name and email.</p>
-    <div class="code" id="join-code"></div>
-    <button class="button secondary" id="show-install" type="button">Download Veristudy</button>
-    <p class="small">The organization owner can grant admin access after you join.</p>
-  </main>
-  <div class="modal hidden" id="install-modal" role="dialog" aria-modal="true" aria-labelledby="install-title">
-    <div class="modal-card">
-      <h2 id="install-title">Download Veristudy</h2>
-      <p>Download the installer for this computer, then open it and follow the installation steps.</p>
-      <div class="status" id="install-status"></div>
-      <div class="modal-actions">
-        <button class="button secondary" id="cancel-install" type="button">Not Now</button>
-        <button class="button" id="download-installer" type="button">Yes, Download</button>
-      </div>
+    <p id="instructions">Choose the download for your computer. Veristudy runs on Windows and Apple silicon Macs, not phones or iPads.</p>
+    <div class="code" id="join-code" aria-label="Organization join code"></div>
+    <button class="button" id="download-windows" type="button">Download for Windows (.exe)<span>Windows laptop or desktop · 64-bit</span></button>
+    <button class="button secondary" id="download-mac" type="button">Download for Mac (.dmg)<span>Apple silicon Mac · M1 or newer</span></button>
+    <div class="status" id="install-status" role="status" aria-live="polite"></div>
+    <a class="small" href="https://github.com/CooperDonnell/Veristudy-Releases/releases/latest">All downloads and release notes</a>
+    <div class="divider">
+      <strong>Already have an account?</strong>
+      <p class="small">Quit Veristudy, install the update, and sign in with your existing account if asked. You do not need to request access again.</p>
+      <strong>New to Veristudy?</strong>
+      <ol class="small"><li>Install and open Veristudy.</li><li>Choose Join Existing and enter the code above manually.</li><li>Create your account and wait for an owner or admin to approve you.</li></ol>
     </div>
-  </div>
+  </main>
 </body>
 </html>
